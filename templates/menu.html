@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FoodGo - Menu</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <div class="phone-container">
+        <div style="background-color: #F26D2E; color: white; padding: 15px 20px; display: flex; align-items: center; justify-content: flex-start; gap: 15px;">
+            <img src="{{ url_for('static', filename='malelogo.png') }}" alt="FoodGo Mini Logo" style="width: 45px; height: 45px; background-color: white; border-radius: 50%; padding: 3px; object-fit: contain;">
+            <div style="text-align: left;">
+                <h2 style="color: white; margin: 0; font-size: 18px; text-align: left;">{{ uzytkownik }} ({{ rola }}) 👋</h2>
+                <p style="font-size: 11px; margin-top: 2px; opacity: 0.9;">
+                    {% if rola == 'Restauracja' %} Panel zarządzania menu {% else %} Zamów lokalne pyszności {% endif %}
+                </p>
+            </div>
+        </div>
+
+        <div class="screen-content">
+            
+            {% if dania %}
+                {% for danie in dania %}
+                    <div class="food-card">
+                        <div class="food-header">
+                            <span class="food-title">{{ danie.nazwa }}</span>
+                            <span class="food-price">{{ danie.cena }} zł</span>
+                        </div>
+                        <p class="food-desc">{{ danie.opis }}</p>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px;">
+                            <span class="food-vendor">📍 {{ danie.dostawca }}</span>
+                            
+                            {% if rola == 'Restauracja' %}
+                                <a href="/usun/{{ danie.id }}" style="color: #F26D2E; text-decoration: none; font-size: 13px; font-weight: bold; padding: 5px 10px; border: 1px solid #F26D2E; border-radius: 8px; background-color: #fffaf7;">❌ Usuń</a>
+                            {% else %}
+                                <a href="/dodaj_do_koszyka/{{ danie.id }}" style="color: white; text-decoration: none; background-color: #2ed573; font-size: 13px; font-weight: bold; padding: 6px 12px; border-radius: 8px;">🛒 Dodaj</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div style="text-align: center; color: #a4b0be; margin-top: 50px;">
+                    <p style="font-size: 48px;">🍕</p>
+                    <p style="margin-top: 10px;">Brak dań do wyświetlenia.</p>
+                </div>
+            {% endif %}
+
+        </div>
+
+        <nav class="bottom-nav">
+            <a href="/menu" class="nav-item active">
+                <span style="font-size: 20px;">🍕</span>
+                <span>Menu</span>
+            </a>
+            {% if rola == 'Restauracja' %}
+            <a href="/dodaj" class="nav-item">
+                <span style="font-size: 20px;">➕</span>
+                <span>Dodaj</span>
+            </a>
+            {% else %}
+            <a href="/koszyk" class="nav-item">
+                <span style="font-size: 20px;">🛍️</span>
+                <span>Koszyk</span>
+            </a>
+            {% endif %}
+            <a href="/profil" class="nav-item">
+                <span style="font-size: 20px;">👤</span>
+                <span>Profil</span>
+            </a>
+            <a href="/wyloguj" class="nav-item" style="color: #F26D2E;">
+                <span style="font-size: 20px;">🚪</span>
+                <span>Wyloguj</span>
+            </a>
+        </nav>
+    </div>
+
+</body>
+</html>

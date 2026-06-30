@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FoodGo - Twój Koszyk</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <div class="phone-container">
+        <div style="background-color: #F26D2E; color: white; padding: 15px 20px; display: flex; align-items: center; justify-content: flex-start; gap: 15px;">
+            <img src="{{ url_for('static', filename='malelogo.png') }}" alt="FoodGo Mini Logo" style="width: 45px; height: 45px; background-color: white; border-radius: 50%; padding: 3px; object-fit: contain;">
+            <div style="text-align: left;">
+                <h2 style="color: white; margin: 0; font-size: 18px; text-align: left;">Twój Koszyk 🛍️</h2>
+                <p style="font-size: 11px; margin-top: 2px; opacity: 0.9;">Podsumowanie Twojego zamówienia</p>
+            </div>
+        </div>
+
+        <div class="screen-content">
+            
+            {% if koszyk %}
+                {% for produkt in koszyk %}
+                    <div class="food-card" style="border-left: 4px solid #2ed573;">
+                        <div class="food-header">
+                            <span class="food-title" style="font-size: 16px;">{{ produkt.nazwa }}</span>
+                            <span class="food-price" style="font-size: 16px;">{{ produkt.cena }} zł</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 5px;">
+                            <span class="food-vendor" style="font-size: 11px;">Od: {{ produkt.dostawca }}</span>
+                            <a href="/usun_z_koszyka/{{ loop.index0 }}" style="color: #F26D2E; text-decoration: none; font-size: 12px; font-weight: bold;">Usuń</a>
+                        </div>
+                    </div>
+                {% endfor %}
+
+                <div style="background-color: #f1f2f6; border-radius: 12px; padding: 15px; margin-top: 20px;">
+                    <label for="metodaPlatnosci" style="display: block; margin-bottom: 8px; color: #57606f; font-size: 13px; font-weight: 600;">Wybiierz metodę płatności:</label>
+                    <select id="metodaPlatnosci" style="width: 100%; padding: 10px; border: 2px solid #ced6e0; border-radius: 8px; background-color: #ffffff; font-size: 14px; font-weight: bold;">
+                        <option value="karta">💳 Karta (u kuriera)</option>
+                        <option value="gotowka">💵 Gotówka (odliczona kwota)</option>
+                    </select>
+                </div>
+
+                <div style="background-color: #f1f2f6; border-radius: 12px; padding: 15px; margin-top: 15px; text-align: center;">
+                    <span style="font-size: 16px; color: #57606f; font-weight: 600;">Łączna kwota do zapłaty:</span>
+                    <h3 style="font-size: 26px; color: #F26D2E; margin-top: 5px; font-weight: 800;">{{ suma }} zł</h3>
+                </div>
+
+                <button id="btnZamow" class="btn btn-primary" style="margin-top: 20px; background-color: #2ed573;">
+                    Zapłać i Zamów
+                </button>
+
+            {% else %}
+                <div style="text-align: center; color: #a4b0be; margin-top: 80px;">
+                    <p style="font-size: 56px;">🛒</p>
+                    <p style="margin-top: 15px; font-size: 15px;">Twój koszyk jest pusty.<br>Dodaj pyszności z zakładki Menu!</p>
+                </div>
+            {% endif %}
+
+        </div>
+
+        <nav class="bottom-nav">
+            <a href="/menu" class="nav-item">
+                <span style="font-size: 20px;">🍕</span>
+                <span>Menu</span>
+            </a>
+            <a href="/koszyk" class="nav-item active">
+                <span style="font-size: 20px;">🛍️</span>
+                <span>Koszyk</span>
+            </a>
+            <a href="/profil" class="nav-item">
+                <span style="font-size: 20px;">👤</span>
+                <span>Profil</span>
+            </a>
+            <a href="/wyloguj" class="nav-item" style="color: #F26D2E;">
+                <span style="font-size: 20px;">🚪</span>
+                <span>Wyloguj</span>
+            </a>
+        </nav>
+    </div>
+
+    <script>
+        const btn = document.getElementById('btnZamow');
+        if (btn) {
+            btn.addEventListener('click', function() {
+                const metoda = document.getElementById('metodaPlatnosci').value;
+                const kwota = "{{ suma }}";
+                
+                let wiadomosc = "";
+                
+                if (metoda === 'karta') {
+                    wiadomosc = "Dziękujemy! Zamówienie przekazane do realizacji. Proszę przygotować kartę płatniczą dla kuriera.";
+                } else {
+                    wiadomosc = "Dziękujemy! Zamówienie przekazane do realizacji. Proszę przygotować dokładnie " + kwota + " zł w gotówce.";
+                }
+                
+                alert(wiadomosc);
+                
+                window.location.href = '/wyloguj';
+            });
+        }
+    </script>
+
+</body>
+</html>

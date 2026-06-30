@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FoodGo - Logowanie</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <div class="phone-container">
+        <div class="screen-content" style="display: flex; flex-direction: column; justify-content: center; height: 100%;">
+            
+            <div style="text-align: center; margin-bottom: 20px;">
+                <img src="{{ url_for('static', filename='logo.png') }}" alt="FoodGo Logo" style="width: 160px; height: auto;">
+            </div>
+
+            {% if komunikat %}
+                <div class="alert">{{ komunikat }}</div>
+            {% endif %}
+
+            <form action="/logowanie" method="POST">
+                <div class="form-group">
+                    <label for="login">Nazwa użytkownika / Nazwa restauracji</label>
+                    <input type="text" id="login" name="login" placeholder="Wpisz login" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="haslo">Hasło</label>
+                    <input type="password" id="haslo" name="haslo" placeholder="Wpisz hasło" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="rola">Kim jesteś? (Wybierz przed rejestracją)</label>
+                    <select id="rola" name="rola" style="width: 100%; padding: 12px; border: 2px solid #f1f2f6; border-radius: 12px; background-color: #f1f2f6; font-size: 15px;">
+                        <option value="Klient">👤 Chcę zamawiać jedzenie (Klient)</option>
+                        <option value="Restauracja">🏪 Chcę wystawiać dania (Restauracja)</option>
+                    </select>
+                </div>
+
+                <div style="margin-top: 25px;">
+                    <button type="submit" name="akcja" value="zaloguj" class="btn btn-primary">Zaloguj się</button>
+                    <button type="submit" name="akcja" value="zarejestruj" class="btn btn-secondary">Zarejestruj nowe konto</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+</body>
+</html>

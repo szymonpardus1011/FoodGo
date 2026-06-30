@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FoodGo - Dodaj Danie</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <div class="phone-container">
+        <div style="background-color: #F26D2E; color: white; padding: 15px 20px; display: flex; align-items: center; justify-content: flex-start; gap: 15px;">
+            <img src="{{ url_for('static', filename='malelogo.png') }}" alt="FoodGo Mini Logo" style="width: 45px; height: 45px; background-color: white; border-radius: 50%; padding: 3px; object-fit: contain;">
+            <div style="text-align: left;">
+                <h2 style="color: white; margin: 0; font-size: 18px; text-align: left;">Nowe danie 🍲</h2>
+                <p style="font-size: 11px; margin-top: 2px; opacity: 0.9;">Uzupełnij menu Twojej restauracji</p>
+            </div>
+        </div>
+
+        <div class="screen-content">
+            
+            <form action="/dodaj" method="POST" style="margin-top: 15px;">
+                <div class="form-group">
+                    <label for="nazwa">Nazwa dania</label>
+                    <input type="text" id="nazwa" name="nazwa" placeholder="np. Pizza Margarita" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="cena">Cena (zł)</label>
+                    <input type="number" id="cena" name="cena" step="0.01" placeholder="np. 29.99" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="opis">Opis dania (opcjonalnie)</label>
+                    <textarea id="opis" name="opis" rows="3" placeholder="Sos pomidorowy, ser mozzarella..."></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="margin-top: 20px;">Dodaj do menu</button>
+            </form>
+
+        </div>
+
+        <nav class="bottom-nav">
+            <a href="/menu" class="nav-item">
+                <span style="font-size: 20px;">🍕</span>
+                <span>Menu</span>
+            </a>
+            <a href="/dodaj" class="nav-item active">
+                <span style="font-size: 20px;">➕</span>
+                <span>Dodaj</span>
+            </a>
+            <a href="/profil" class="nav-item">
+                <span style="font-size: 20px;">👤</span>
+                <span>Profil</span>
+            </a>
+            <a href="/wyloguj" class="nav-item" style="color: #F26D2E;">
+                <span style="font-size: 20px;">🚪</span>
+                <span>Wyloguj</span>
+            </a>
+        </nav>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FoodGo - Twój Profil</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <div class="phone-container">
+        <div style="background-color: #F26D2E; color: white; padding: 15px 20px; display: flex; align-items: center; justify-content: flex-start; gap: 15px;">
+            <img src="{{ url_for('static', filename='malelogo.png') }}" alt="FoodGo Mini Logo" style="width: 45px; height: 45px; background-color: white; border-radius: 50%; padding: 3px; object-fit: contain;">
+            <div style="text-align: left;">
+                <h2 style="color: white; margin: 0; font-size: 18px; text-align: left;">Profil użytkownika 👤</h2>
+                <p style="font-size: 11px; margin-top: 2px; opacity: 0.9;">Zarządzaj swoimi danymi konta</p>
+            </div>
+        </div>
+
+        <div class="screen-content">
+            
+            {% if komunikat %}
+                {% if typ_komunikatu == 'success' %}
+                    <div class="alert" style="background-color: #d4edda; color: #155724;">{{ komunikat }}</div>
+                {% else %}
+                    <div class="alert" style="background-color: #ffeaa7; color: #d63031;">{{ komunikat }}</div>
+                {% endif %}
+            {% endif %}
+
+            <div style="text-align: center; margin-bottom: 25px; background-color: #f1f2f6; padding: 15px; border-radius: 16px;">
+                <span style="font-size: 12px; color: #747d8c; font-weight: bold; text-transform: uppercase;">Twoja Rola w Systemie</span>
+                <h3 style="color: #F26D2E; margin-top: 5px; font-size: 20px;">✨ {{ rola }}</h3>
+            </div>
+
+            <form action="/profil" method="POST">
+                <div class="form-group">
+                    <label for="nowy_login">Nazwa użytkownika / Restauracji</label>
+                    <input type="text" id="nowy_login" name="nowy_login" value="{{ uzytkownik }}" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="nowe_haslo">Nowe Hasło (zostaw puste, aby nie zmieniać)</label>
+                    <input type="password" id="nowe_haslo" name="nowe_haslo" placeholder="Wpisz nowe hasło">
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="margin-top: 15px;">Zapisz zmiany</button>
+            </form>
+
+        </div>
+
+        <nav class="bottom-nav">
+            <a href="/menu" class="nav-item">
+                <span style="font-size: 20px;">🍕</span>
+                <span>Menu</span>
+            </a>
+            
+            {% if rola == 'Restauracja' %}
+            <a href="/dodaj" class="nav-item">
+                <span style="font-size: 20px;">➕</span>
+                <span>Dodaj</span>
+            </a>
+            {% else %}
+            <a href="/koszyk" class="nav-item">
+                <span style="font-size: 20px;">🛍️</span>
+                <span>Koszyk</span>
+            </a>
+            {% endif %}
+
+            <a href="/profil" class="nav-item active">
+                <span style="font-size: 20px;">👤</span>
+                <span>Profil</span>
+            </a>
+            
+            <a href="/wyloguj" class="nav-item" style="color: #F26D2E;">
+                <span style="font-size: 20px;">🚪</span>
+                <span>Wyloguj</span>
+            </a>
+        </nav>
+    </div>
+
+</body>
+</html>
