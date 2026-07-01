@@ -43,11 +43,11 @@ To run this project locally, ensure you have **Python 3.8+** installed, then fol
    git clone [https://github.com/szymonpardus1011/FoodGo.git](https://github.com/szymonpardus1011/FoodGo.git)
    cd FoodGo
 
-Install required dependencies:
+Install required dependencies(bash):
 
 pip install flask werkzeug
 
-Launch the application server:
+Launch the application server(bash):
 
 python app.py
 
